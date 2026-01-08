@@ -1,12 +1,13 @@
 import { useState } from "react";
+import { PrimaryButton } from "../styles/button";
 
 export function MyForm() {
   const [inputs, setInputs] = useState({});
   const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+   const target = e.target
+   const name = target.name
+   const value = target.type === "checkbox" ? target.checked : target.value
+   setInputs((prev)=> ({...prev, [name]:value}))
   };
   const handleSubmit = (event) => {
     let fillings = "";
