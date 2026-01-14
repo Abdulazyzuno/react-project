@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { PrimaryButton } from "../styles/button";
 
 export function MyForm() {
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+
+  });
   const handleChange = (e) => {
-   const target = e.target
-   const name = target.name
-   const value = target.type === "checkbox" ? target.checked : target.value
-   setInputs((prev)=> ({...prev, [name]:value}))
+    const target = e.target; //identifying element that is firing the event
+    const name = target.name;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+
+    setInputs((prev) => ({ ...prev, [name]: value }));
   };
   const handleSubmit = (event) => {
     let fillings = "";
@@ -31,7 +33,8 @@ export function MyForm() {
           value={inputs.firstname}
           onChange={handleChange}
         />
-      </label>
+      </label>{" "}
+      <br />
       <label>
         Last name:
         <input
@@ -41,16 +44,18 @@ export function MyForm() {
           onChange={handleChange}
         />
       </label>
-
+      <br />
       <select name="cars" value={inputs.cars} onChange={handleChange}>
         <option value="Ford">Ford</option>
         <option value="Volvo">Volvo</option>
         <option value="Fiat">Fiat</option>
       </select>
+      <br />
       <label>
         Write here:
         <textarea value={inputs.txt} name="txt" onChange={handleChange} />
       </label>
+      <br />
       <p>I want a burger with:</p>
       <label>
         Tomato:
@@ -61,6 +66,7 @@ export function MyForm() {
           onChange={handleChange}
         />
       </label>
+      <br />
       <label>
         Onion:
         <input
@@ -70,6 +76,7 @@ export function MyForm() {
           onChange={handleChange}
         />
       </label>
+      <br />
       <p>Select your favorite fruit:</p>
       <label>
         <input
@@ -82,6 +89,7 @@ export function MyForm() {
         Apple
       </label>
       <br />
+      <br />
       <label>
         <input
           type="radio"
@@ -93,6 +101,7 @@ export function MyForm() {
         Banana
       </label>
       <br />
+      <br />
       <label>
         <input
           type="radio"
@@ -103,11 +112,18 @@ export function MyForm() {
         />{" "}
         Cherry
       </label>
+      <br />
       <button type="submit">Submit</button>
-      <p>
-        Current values: {inputs.firstname} {inputs.lastname} {inputs.cars}{inputs.fruit}
-        {inputs.txt}
-      </p>
+      <pre>
+        Current values:
+        {`
+        ${inputs.firstname ?? ""}
+        ${inputs.lastname ?? ""}
+        ${inputs.cars??""}
+        ${inputs.fruit??""}
+        ${inputs.txt??""}
+        `}
+      </pre>
     </form>
   );
 }
