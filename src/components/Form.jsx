@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "./Modal";
+import { TestContext } from "../context/test";
 
 export function MyForm() {
+    const color = useContext(TestContext)
   const [inputs, setInputs] = useState({});
   const [showModal, setShowModal] = useState(false);
   const handleChange = (e) => {
@@ -30,6 +32,7 @@ export function MyForm() {
     <>
     {showModal && <Modal {...inputs} onClose={handleClose}/>}
       <form onSubmit={handleSubmit}>
+        {color}
         <label>
           First name:
           <input
