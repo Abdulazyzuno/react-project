@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import Modal from "./Modal";
+import { TestContext } from "../context/test";
 
-function MyForm() {
+
+
+export function MyForm() {
+    const color = useContext(TestContext)
   const [inputs, setInputs] = useState({});
-
+  const [showModal, setShowModal] = useState(false);
   const handleChange = (e) => {
     const target = e.target;
     const name = target.name;
@@ -14,10 +19,17 @@ function MyForm() {
     e.preventDefault();
     let fillings = "";
     if (inputs.tomato) fillings += "tomato";
-    if (inputs.onion) fillings += fillings ? " and onion" : "onion";
-    if (!fillings) fillings = "no fillings";
-    alert(`${inputs.firstname} wants a burger with ${fillings}`);
+    if (inputs.onion) {
+      if (inputs.tomato) fillings += " and ";
+      fillings += "onion";
+    }
+    if (fillings == "") fillings = "no fillings";
+    setShowModal(true);
+    event.preventDefault();
   };
+  const handleClose = ()=> {
+    setShowModal(false)
+  }
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -47,10 +59,9 @@ function MyForm() {
         <label>Select a car</label>
         <select name="cars" value={inputs.cars || ""} onChange={handleChange}>
           <option value="">Choose</option>
-          <option value="Ford">Ford</option>
-          <option value="Volvo">Volvo</option>
-          <option value="Fiat">Fiat</option>
-        </select>
+    <>
+    {showModal && <Modal {...inputs} onClose={handleClose}/>}
+     
       </div>
 
       <div className="form-group">
@@ -127,8 +138,9 @@ ${inputs.cars ?? ""}
 ${inputs.fruit ?? ""}
 ${inputs.txt ?? ""}
         `}
-      </pre>
-    </form>
+        </pre>
+      </form>
+    </>
   );
 }
 
