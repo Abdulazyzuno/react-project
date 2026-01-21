@@ -1,11 +1,24 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "./Modal";
 import { TestContext } from "../context/test";
 
 export function MyForm() {
-    const color = useContext(TestContext)
+  const color = useContext(TestContext);
+  const [count, setCount] = useState(1);
+  const [calculation, setCalculation] = useState(0);
   const [inputs, setInputs] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const handleIncrease = () => {
+    setCount((prev) => prev + 1);
+  };
+  useEffect(() => {
+    const handleCalculation = () => setCalculation(() => count * 5);
+    return handleCalculation
+  },[count]);
+  useEffect(() => {
+    const handleCount = () => setCount((cnt) => cnt * 5);
+    return handleCount
+}, [count]);
   const handleChange = (e) => {
     const target = e.target; //identifying element that is firing the event
     const name = target.name;
@@ -24,13 +37,16 @@ export function MyForm() {
     setShowModal(true);
     event.preventDefault();
   };
-  const handleClose = ()=> {
-    setShowModal(false)
-  }
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
-    {showModal && <Modal {...inputs} onClose={handleClose}/>}
+      <span>Count:{count}</span>
+      <span>Calculation:{calculation}</span>
+      <button onClick={() => handleIncrease()}>Increase count</button>
+      {showModal && <Modal {...inputs} onClose={handleClose} />}
       <form onSubmit={handleSubmit}>
         {color}
         <label>
