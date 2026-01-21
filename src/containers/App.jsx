@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import HomePage from "../components/HomePage";
-import { MyForm } from "../components/Form";
 import { Search } from "../components/Search";
+import MyForm from "../components/Form";
 
 function App() {
   return (
