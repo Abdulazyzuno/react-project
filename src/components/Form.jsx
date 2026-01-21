@@ -25,7 +25,7 @@ export function MyForm() {
     }
     if (fillings == "") fillings = "no fillings";
     setShowModal(true);
-    event.preventDefault();
+    e.preventDefault();
   };
   const handleClose = ()=> {
     setShowModal(false)
