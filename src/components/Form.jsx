@@ -71,6 +71,9 @@ export function MyForm() {
           <label>Select a car</label>
           <select name="cars" value={inputs.cars || ""} onChange={handleChange}>
             <option value="">Choose</option>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
           </select>
         </div>
 
