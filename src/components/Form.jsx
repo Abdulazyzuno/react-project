@@ -13,20 +13,21 @@ export function MyForm() {
   };
   useEffect(() => {
     const handleCalculation = () => setCalculation(() => count * 5);
-    return handleCalculation
-  },[count]);
+    return handleCalculation;
+  }, [count]);
   useEffect(() => {
     const handleCount = () => setCount((cnt) => cnt * 5);
-    return handleCount
-}, [count]);
+    return handleCount;
+  }, [count]);
   const handleChange = (e) => {
-    const target = e.target; //identifying element that is firing the event
+    const target = e.target;
     const name = target.name;
     const value = target.type === "checkbox" ? target.checked : target.value;
-
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (event) => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let fillings = "";
     if (inputs.tomato) fillings += "tomato";
     if (inputs.onion) {
@@ -43,112 +44,118 @@ export function MyForm() {
 
   return (
     <>
-      <span>Count:{count}</span>
-      <span>Calculation:{calculation}</span>
-      <button onClick={() => handleIncrease()}>Increase count</button>
       {showModal && <Modal {...inputs} onClose={handleClose} />}
-      <form onSubmit={handleSubmit}>
-        {color}
-        <label>
-          First name:
+      <form className="form" onSubmit={handleSubmit}>
+        <h2 className="form-title">Burger Order Form</h2>
+        <div className="form-group">
+          <label>First name</label>
           <input
             type="text"
             name="firstname"
-            value={inputs.firstname}
+            value={inputs.firstname || ""}
             onChange={handleChange}
           />
-        </label>{" "}
-        <br />
-        <label>
-          Last name:
+        </div>
+
+        <div className="form-group">
+          <label>Last name</label>
           <input
             type="text"
             name="lastname"
-            value={inputs.lastname}
+            value={inputs.lastname || ""}
             onChange={handleChange}
           />
-        </label>
-        <br />
-        <select name="cars" value={inputs.cars} onChange={handleChange}>
-          <option value="Ford">Ford</option>
-          <option value="Volvo">Volvo</option>
-          <option value="Fiat">Fiat</option>
-        </select>
-        <br />
-        <label>
-          Write here:
-          <textarea value={inputs.txt} name="txt" onChange={handleChange} />
-        </label>
-        <br />
-        <p>I want a burger with:</p>
-        <label>
-          Tomato:
-          <input
-            type="checkbox"
-            name="tomato"
-            checked={inputs.tomato}
+        </div>
+
+        <div className="form-group">
+          <label>Select a car</label>
+          <select name="cars" value={inputs.cars || ""} onChange={handleChange}>
+            <option value="">Choose</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Write here</label>
+          <textarea
+            name="txt"
+            value={inputs.txt || ""}
             onChange={handleChange}
           />
-        </label>
-        <br />
-        <label>
-          Onion:
-          <input
-            type="checkbox"
-            name="onion"
-            checked={inputs.onion}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <p>Select your favorite fruit:</p>
-        <label>
-          <input
-            type="radio"
-            name="fruit"
-            value="apple"
-            checked={inputs.fruit === "apple"}
-            onChange={handleChange}
-          />{" "}
-          Apple
-        </label>
-        <br />
-        <br />
-        <label>
-          <input
-            type="radio"
-            name="fruit"
-            value="banana"
-            checked={inputs.fruit === "banana"}
-            onChange={handleChange}
-          />{" "}
-          Banana
-        </label>
-        <br />
-        <br />
-        <label>
-          <input
-            type="radio"
-            name="fruit"
-            value="cherry"
-            checked={inputs.fruit === "cherry"}
-            onChange={handleChange}
-          />{" "}
-          Cherry
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-        <pre>
+        </div>
+
+        <div className="form-group">
+          <p>I want a burger with:</p>
+          <label className="inline">
+            <input
+              type="checkbox"
+              name="tomato"
+              checked={inputs.tomato || false}
+              onChange={handleChange}
+            />
+            Tomato
+          </label>
+          <label className="inline">
+            <input
+              type="checkbox"
+              name="onion"
+              checked={inputs.onion || false}
+              onChange={handleChange}
+            />
+            Onion
+          </label>
+        </div>
+
+        <div className="form-group">
+          <p>Select your favorite fruit:</p>
+          <label className="inline">
+            <input
+              type="radio"
+              name="fruit"
+              value="apple"
+              checked={inputs.fruit === "apple"}
+              onChange={handleChange}
+            />
+            Apple
+          </label>
+          <label className="inline">
+            <input
+              type="radio"
+              name="fruit"
+              value="banana"
+              checked={inputs.fruit === "banana"}
+              onChange={handleChange}
+            />
+            Banana
+          </label>
+          <label className="inline">
+            <input
+              type="radio"
+              name="fruit"
+              value="cherry"
+              checked={inputs.fruit === "cherry"}
+              onChange={handleChange}
+            />
+            Cherry
+          </label>
+        </div>
+
+        <button className="submit-btn" type="submit">
+          Submit
+        </button>
+
+        <pre className="output">
           Current values:
           {`
-        ${inputs.firstname ?? ""}
-        ${inputs.lastname ?? ""}
-        ${inputs.cars ?? ""}
-        ${inputs.fruit ?? ""}
-        ${inputs.txt ?? ""}
+${inputs.firstname ?? ""}
+${inputs.lastname ?? ""}
+${inputs.cars ?? ""}
+${inputs.fruit ?? ""}
+${inputs.txt ?? ""}
         `}
         </pre>
       </form>
     </>
   );
 }
+
+export default MyForm;
