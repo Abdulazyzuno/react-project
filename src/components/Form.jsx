@@ -2,18 +2,21 @@ import { useContext, useState } from "react";
 import Modal from "./Modal";
 import { TestContext } from "../context/test";
 
+
+
 export function MyForm() {
     const color = useContext(TestContext)
   const [inputs, setInputs] = useState({});
   const [showModal, setShowModal] = useState(false);
   const handleChange = (e) => {
-    const target = e.target; //identifying element that is firing the event
+    const target = e.target;
     const name = target.name;
     const value = target.type === "checkbox" ? target.checked : target.value;
-
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (event) => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let fillings = "";
     if (inputs.tomato) fillings += "tomato";
     if (inputs.onion) {
@@ -29,110 +32,116 @@ export function MyForm() {
   }
 
   return (
+    <form className="form" onSubmit={handleSubmit}>
+      <h2 className="form-title">Burger Order Form</h2>
+
+      <div className="form-group">
+        <label>First name</label>
+        <input
+          type="text"
+          name="firstname"
+          value={inputs.firstname || ""}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Last name</label>
+        <input
+          type="text"
+          name="lastname"
+          value={inputs.lastname || ""}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Select a car</label>
+        <select name="cars" value={inputs.cars || ""} onChange={handleChange}>
+          <option value="">Choose</option>
     <>
     {showModal && <Modal {...inputs} onClose={handleClose}/>}
-      <form onSubmit={handleSubmit}>
-        {color}
-        <label>
-          First name:
-          <input
-            type="text"
-            name="firstname"
-            value={inputs.firstname}
-            onChange={handleChange}
-          />
-        </label>{" "}
-        <br />
-        <label>
-          Last name:
-          <input
-            type="text"
-            name="lastname"
-            value={inputs.lastname}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <select name="cars" value={inputs.cars} onChange={handleChange}>
-          <option value="Ford">Ford</option>
-          <option value="Volvo">Volvo</option>
-          <option value="Fiat">Fiat</option>
-        </select>
-        <br />
-        <label>
-          Write here:
-          <textarea value={inputs.txt} name="txt" onChange={handleChange} />
-        </label>
-        <br />
+     
+      </div>
+
+      <div className="form-group">
+        <label>Write here</label>
+        <textarea name="txt" value={inputs.txt || ""} onChange={handleChange} />
+      </div>
+
+      <div className="form-group">
         <p>I want a burger with:</p>
-        <label>
-          Tomato:
+        <label className="inline">
           <input
             type="checkbox"
             name="tomato"
-            checked={inputs.tomato}
+            checked={inputs.tomato || false}
             onChange={handleChange}
           />
+          Tomato
         </label>
-        <br />
-        <label>
-          Onion:
+        <label className="inline">
           <input
             type="checkbox"
             name="onion"
-            checked={inputs.onion}
+            checked={inputs.onion || false}
             onChange={handleChange}
           />
+          Onion
         </label>
-        <br />
+      </div>
+
+      <div className="form-group">
         <p>Select your favorite fruit:</p>
-        <label>
+        <label className="inline">
           <input
             type="radio"
             name="fruit"
             value="apple"
             checked={inputs.fruit === "apple"}
             onChange={handleChange}
-          />{" "}
+          />
           Apple
         </label>
-        <br />
-        <br />
-        <label>
+        <label className="inline">
           <input
             type="radio"
             name="fruit"
             value="banana"
             checked={inputs.fruit === "banana"}
             onChange={handleChange}
-          />{" "}
+          />
           Banana
         </label>
-        <br />
-        <br />
-        <label>
+        <label className="inline">
           <input
             type="radio"
             name="fruit"
             value="cherry"
             checked={inputs.fruit === "cherry"}
             onChange={handleChange}
-          />{" "}
+          />
           Cherry
         </label>
-        <br />
-        <button type="submit">Submit</button>
-        <pre>
-          Current values:
-          {`
-        ${inputs.firstname ?? ""}
-        ${inputs.lastname ?? ""}
-        ${inputs.cars ?? ""}
-        ${inputs.fruit ?? ""}
-        ${inputs.txt ?? ""}
+      </div>
+
+      <button className="submit-btn" type="submit">
+        Submit
+      </button>
+
+      <pre className="output">
+        Current values:
+        {`
+${inputs.firstname ?? ""}
+${inputs.lastname ?? ""}
+${inputs.cars ?? ""}
+${inputs.fruit ?? ""}
+${inputs.txt ?? ""}
         `}
         </pre>
       </form>
     </>
   );
 }
+
+export default MyForm;
