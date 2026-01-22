@@ -1,18 +1,6 @@
 import { useState, useTransition } from "react";
+import SearchResults from "./SearchResult";
 
- function SearchResults({ query }) {
-  const items = [];
-  if (query) {
-    for (let i = 0; i < 1000; i++) {
-      items.push(
-        <li key={i}>
-          Result for {query} - {i}
-        </li>
-      );
-    }
-  }
-  return <ul>{items}</ul>;
-}
 
 export function Search() {
   const [input, setInput] = useState("");
@@ -36,6 +24,7 @@ export function Search() {
         value={input}
         onChange={handleChange}
         placeholder="Type to search..."
+        style={{width: "25%"}}
       />
       {isPending && <p>Loading results...</p>}
       <SearchResults query={query} />
