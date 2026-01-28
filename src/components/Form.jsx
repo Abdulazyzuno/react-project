@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Modal from "./Modal";
 import { TestContext } from "../context/test";
+import { Search } from "./Search";
 
 export function MyForm() {
   const color = useContext(TestContext);
