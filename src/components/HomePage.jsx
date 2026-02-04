@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { TestContext } from "../context/test";
 import { Search } from "./Search";
 import ContextExample from "./ContextExample";
+import ReducerExample from "./ReducerExample";
 
 function Component1() {
   const color = useContext(TestContext);
@@ -17,6 +18,7 @@ export default function HomePage() {
       {/* HomePage */}
       <Search />
       <ContextExample/>
+      <ReducerExample/>
       {/* <Component2 /> */}
     </>
   );
